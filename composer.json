@@ -61,6 +61,6 @@
     "scripts-descriptions": {
         "analyse:phpstan": "Run static analysis"
     },
-    "minimum-stability": "beta",
-    "prefer-stable": true
+    "minimum-stability": "dev",
+    "prefer-stable": false
 }
