@@ -62,5 +62,5 @@
         "analyse:phpstan": "Run static analysis"
     },
     "minimum-stability": "dev",
-    "prefer-stable": false
+    "prefer-stable": true
 }
