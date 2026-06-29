@@ -56,10 +56,12 @@
     },
     "scripts": {
         "analyse:phpstan": "phpstan analyse",
-        "clear-cache:phpstan": "phpstan clear-result-cache"
+        "clear-cache:phpstan": "phpstan clear-result-cache",
+        "build:js": "cd js && npm install && npm run build"
     },
     "scripts-descriptions": {
-        "analyse:phpstan": "Run static analysis"
+        "analyse:phpstan": "Run static analysis",
+        "build:js": "Build JavaScript assets"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
