@@ -41,107 +41,102 @@ return [
         ->configure(function (Configurator $configurator) {
             $settings = resolve('flarum.settings');
 
-            $configurator->tags->add('AUTOAUDIO')->attributes->add('src');
-            $configurator->tags['AUTOAUDIO']->template =
-                '<audio controls="" preload="none" src="{@src}"><a href="{@src}"><xsl:value-of select="@src"/></a></audio>';
+            // Auto Audio - Convert audio URLs to HTML5 audio players
+            if ($settings->get('zephyrisle-formatting-pro.plugin.autoaudio', true)) {
+                $configurator->Autoimage;
+                $configurator->MediaEmbed->add('audio');
+            }
 
-            foreach (Api\ForumResourceFields::PLUGINS as $plugin) {
-                $enabled = $settings->get('zephyrisle-formatting-pro.plugin.'.strtolower($plugin));
+            // NetEase Cloud Music
+            if ($settings->get('zephyrisle-formatting-pro.plugin.netease', true)) {
+                $configurator->MediaEmbed->add(
+                    'netease',
+                    [
+                        'host' => 'music.163.com',
+                        'extract' => [
+                            "!music\\.163\\.com/#/(?<mode>song|album|playlist)\\?id=(?<id>\\d+)!",
+                            "!music\\.163\\.com/m/(?<mode>song|album|playlist)\\?id=(?<id>\\d+)!",
+                            "!music\\.163\\.com/(?<mode>song|album|playlist)\\?id=(?<id>\\d+)!",
+                            "!music\\.163\\.com/(?<mode>song|album|playlist)/(?<id>\\d+)/?(?:\\?userid=\\d+)?",
+                        ],
+                        'choose' => [
+                            'when' => [
+                                [
+                                    'test' => "@mode = 'album'",
+                                    'iframe' => [
+                                        'width' => 380,
+                                        'height' => 450,
+                                        'src' => 'https://music.163.com/outchain/player?type=1&id={@id}&auto=0&height=430',
+                                    ],
+                                ],
+                                [
+                                    'test' => "@mode = 'song'",
+                                    'iframe' => [
+                                        'width' => 380,
+                                        'height' => 86,
+                                        'src' => 'https://music.163.com/outchain/player?type=2&id={@id}&auto=0&height=66',
+                                    ],
+                                ],
+                            ],
+                            'otherwise' => [
+                                'iframe' => [
+                                    'width' => 380,
+                                    'height' => 450,
+                                    'src' => 'https://music.163.com/outchain/player?type=0&id={@id}&auto=0&height=430',
+                                ],
+                            ],
+                        ],
+                    ]
+                );
+            }
 
-                if ($enabled) {
-                    if ($plugin === 'NetEase') {
-                        $configurator->MediaEmbed->add(
-                            'netease',
-                            [
-                                'host' => 'music.163.com',
-                                'extract' => [
-                                    "!music\\.163\\.com/#/(?<mode>song|album|playlist)\\?id=(?<id>\\d+)!",
-                                    "!music\\.163\\.com/m/(?<mode>song|album|playlist)\\?id=(?<id>\\d+)!",
-                                    "!music\\.163\\.com/(?<mode>song|album|playlist)\\?id=(?<id>\\d+)!",
-                                    "!music\\.163\\.com/(?<mode>song|album|playlist)/(?<id>\\d+)/?(?:\\?userid=\\d+)?!",
-                                ],
-                                'choose' => [
-                                    'when' => [
-                                        [
-                                            'test' => "@mode = 'album'",
-                                            'iframe' => [
-                                                'width' => 380,
-                                                'height' => 450,
-                                                'src' => 'https://music.163.com/outchain/player?type=1&id={@id}&auto=0&height=430',
-                                            ],
-                                        ],
-                                        [
-                                            'test' => "@mode = 'song'",
-                                            'iframe' => [
-                                                'width' => 380,
-                                                'height' => 86,
-                                                'src' => 'https://music.163.com/outchain/player?type=2&id={@id}&auto=0&height=66',
-                                            ],
-                                        ],
-                                    ],
-                                    'otherwise' => [
-                                        'iframe' => [
-                                            'width' => 380,
-                                            'height' => 450,
-                                            'src' => 'https://music.163.com/outchain/player?type=0&id={@id}&auto=0&height=430',
-                                        ],
+            // Bilibili
+            if ($settings->get('zephyrisle-formatting-pro.plugin.bilibili', true)) {
+                $configurator->MediaEmbed->add(
+                    'bilibili',
+                    [
+                        'host' => ['www.bilibili.com', 'bilibili.com'],
+                        'extract' => [
+                            "!bilibili\\.com/video/(?<bvid>BV[0-9A-Za-z]+)(?:/?(?:\\?[^#\\s]*?[?&]p=(?<page>\\d+))?)?!",
+                            "!bilibili\\.com/video/av(?<aid>\\d+)(?:/?(?:\\?[^#\\s]*?[?&]p=(?<page>\\d+))?)?!",
+                        ],
+                        'choose' => [
+                            'when' => [
+                                [
+                                    'test' => '@bvid and @page',
+                                    'iframe' => [
+                                        'width' => 720,
+                                        'height' => 405,
+                                        'src' => 'https://player.bilibili.com/player.html?bvid={@bvid}&page={@page}',
                                     ],
                                 ],
-                            ]
-                        );
-                    } elseif ($plugin === 'Bilibili') {
-                        $configurator->MediaEmbed->add(
-                            'bilibili',
-                            [
-                                'host' => ['www.bilibili.com', 'bilibili.com'],
-                                'extract' => [
-                                    "!bilibili\\.com/video/(?<bvid>BV[0-9A-Za-z]+)(?:/?(?:\\?[^#\\s]*?[?&]p=(?<page>\\d+))?)?!",
-                                    "!bilibili\\.com/video/av(?<aid>\\d+)(?:/?(?:\\?[^#\\s]*?[?&]p=(?<page>\\d+))?)?!",
-                                ],
-                                'choose' => [
-                                    'when' => [
-                                        [
-                                            'test' => '@bvid and @page',
-                                            'iframe' => [
-                                                'width' => 720,
-                                                'height' => 405,
-                                                'src' => 'https://player.bilibili.com/player.html?bvid={@bvid}&page={@page}',
-                                            ],
-                                        ],
-                                        [
-                                            'test' => '@bvid',
-                                            'iframe' => [
-                                                'width' => 720,
-                                                'height' => 405,
-                                                'src' => 'https://player.bilibili.com/player.html?bvid={@bvid}',
-                                            ],
-                                        ],
-                                        [
-                                            'test' => '@aid and @page',
-                                            'iframe' => [
-                                                'width' => 720,
-                                                'height' => 405,
-                                                'src' => 'https://player.bilibili.com/player.html?aid={@aid}&page={@page}',
-                                            ],
-                                        ],
-                                    ],
-                                    'otherwise' => [
-                                        'iframe' => [
-                                            'width' => 720,
-                                            'height' => 405,
-                                            'src' => 'https://player.bilibili.com/player.html?aid={@aid}',
-                                        ],
+                                [
+                                    'test' => '@bvid',
+                                    'iframe' => [
+                                        'width' => 720,
+                                        'height' => 405,
+                                        'src' => 'https://player.bilibili.com/player.html?bvid={@bvid}',
                                     ],
                                 ],
-                            ]
-                        );
-                    } elseif ($plugin === 'AutoAudio') {
-                        $configurator->Preg->match(
-                            '((?:https?://)[^\s<>"\']+\.(?:mp3|m4a|ogg|wav|flac|aac|opus)(?:\?[^\s<>"\']*)?)',
-                            'AUTOAUDIO'
-                        );
-                    }
-                }
+                                [
+                                    'test' => '@aid and @page',
+                                    'iframe' => [
+                                        'width' => 720,
+                                        'height' => 405,
+                                        'src' => 'https://player.bilibili.com/player.html?aid={@aid}&page={@page}',
+                                    ],
+                                ],
+                            ],
+                            'otherwise' => [
+                                'iframe' => [
+                                    'width' => 720,
+                                    'height' => 405,
+                                    'src' => 'https://player.bilibili.com/player.html?aid={@aid}',
+                                ],
+                            ],
+                        ],
+                    ]
+                );
             }
         }),
 
