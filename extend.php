@@ -20,6 +20,7 @@ use Zephyrisle\FormattingPro\Api\ForumResourceFields;
 
 return [
     (new Extend\Frontend('forum'))
+        ->js(__DIR__.'/js/dist/forum.js')
         ->css(__DIR__.'/resources/less/forum.less')
         ->content(function (Document $document) {
             $settings = resolve('flarum.settings');
