@@ -1,6 +1,6 @@
 # Formatting Pro (Fork)
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/zephyrisle/fof-formatting-pro.svg)](https://packagist.org/packages/zephyrisle/fof-formatting-pro)
+![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/zephyrisle/formatting-pro.svg)](https://packagist.org/packages/zephyrisle/formatting-pro)
 
 This is a fork of the original [FriendsOfFlarum/formatting](https://github.com/FriendsOfFlarum/formatting) extension for [Flarum](http://flarum.org), maintained as a separate project with additional audio support, Chinese platform embeds (NetEase Cloud Music, Bilibili), and custom audio CSS.
 

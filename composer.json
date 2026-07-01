@@ -38,7 +38,7 @@
         "flarum-extension": {
             "title": "Zephyr Fork: Formatting Pro",
             "category": "feature",
-            "id": "zephyrisle-formatting-pro-fork",
+            "id": "zephyrisle-formatting-pro",
             "icon": {
                 "name": "fas fa-music",
                 "backgroundColor": "#ff6b6b",
