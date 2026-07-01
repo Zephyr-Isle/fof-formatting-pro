@@ -16,7 +16,6 @@ use Flarum\Extend;
 use Flarum\Frontend\Document;
 use Flarum\Settings\Event\Saved;
 use s9e\TextFormatter\Configurator;
-use s9e\TextFormatter\Configurator\Bundles\MediaPack;
 use Zephyrisle\FormattingPro\Api\ForumResourceFields;
 
 return [
@@ -24,7 +23,7 @@ return [
         ->css(__DIR__.'/resources/less/forum.less')
         ->content(function (Document $document) {
             $settings = resolve('flarum.settings');
-            $customCss = $settings->get('zephyrisle-formatting-pro-fork.audio_css', '');
+            $customCss = $settings->get('zephyrisle-formatting-pro.audio_css', '');
             
             if ($customCss) {
                 $document->head[] = '<style>' . $customCss . '</style>';
@@ -41,22 +40,105 @@ return [
         ->configure(function (Configurator $configurator) {
             $settings = resolve('flarum.settings');
 
+            $configurator->tags->add('AUTOAUDIO')->attributes->add('src');
+            $configurator->tags['AUTOAUDIO']->template =
+                '<audio controls="" preload="none" src="{@src}"><a href="{@src}"><xsl:value-of select="@src"/></a></audio>';
+
             foreach (Api\ForumResourceFields::PLUGINS as $plugin) {
-                $enabled = $settings->get('zephyrisle-formatting-pro-fork.plugin.'.strtolower($plugin));
+                $enabled = $settings->get('zephyrisle-formatting-pro.plugin.'.strtolower($plugin));
 
                 if ($enabled) {
-                    if ($plugin == 'NetEase' || $plugin == 'Bilibili') {
-                        // Initialize MediaPack for these plugins
-                        (new MediaPack())->configure($configurator);
-                        
-                        if ($plugin == 'NetEase') {
-                            $configurator->MediaEmbed->add('music.163.com');
-                        } elseif ($plugin == 'Bilibili') {
-                            $configurator->MediaEmbed->add('bilibili.com');
-                        }
-                    } elseif ($plugin == 'AutoAudio') {
-                        // Auto Audio - Convert audio URLs to HTML5 audio players
-                        $configurator->MediaEmbed->add('audio');
+                    if ($plugin === 'NetEase') {
+                        $configurator->MediaEmbed->add(
+                            'netease',
+                            [
+                                'host' => 'music.163.com',
+                                'extract' => [
+                                    "!music\\.163\\.com/#/(?<mode>song|album|playlist)\\?id=(?<id>\\d+)!",
+                                    "!music\\.163\\.com/m/(?<mode>song|album|playlist)\\?id=(?<id>\\d+)!",
+                                    "!music\\.163\\.com/(?<mode>song|album|playlist)\\?id=(?<id>\\d+)!",
+                                    "!music\\.163\\.com/(?<mode>song|album|playlist)/(?<id>\\d+)/?(?:\\?userid=\\d+)?!",
+                                ],
+                                'choose' => [
+                                    'when' => [
+                                        [
+                                            'test' => "@mode = 'album'",
+                                            'iframe' => [
+                                                'width' => 380,
+                                                'height' => 450,
+                                                'src' => 'https://music.163.com/outchain/player?type=1&id={@id}&auto=0&height=430',
+                                            ],
+                                        ],
+                                        [
+                                            'test' => "@mode = 'song'",
+                                            'iframe' => [
+                                                'width' => 380,
+                                                'height' => 86,
+                                                'src' => 'https://music.163.com/outchain/player?type=2&id={@id}&auto=0&height=66',
+                                            ],
+                                        ],
+                                    ],
+                                    'otherwise' => [
+                                        'iframe' => [
+                                            'width' => 380,
+                                            'height' => 450,
+                                            'src' => 'https://music.163.com/outchain/player?type=0&id={@id}&auto=0&height=430',
+                                        ],
+                                    ],
+                                ],
+                            ]
+                        );
+                    } elseif ($plugin === 'Bilibili') {
+                        $configurator->MediaEmbed->add(
+                            'bilibili',
+                            [
+                                'host' => ['www.bilibili.com', 'bilibili.com'],
+                                'extract' => [
+                                    "!bilibili\\.com/video/(?<bvid>BV[0-9A-Za-z]+)(?:/?(?:\\?[^#\\s]*?[?&]p=(?<page>\\d+))?)?!",
+                                    "!bilibili\\.com/video/av(?<aid>\\d+)(?:/?(?:\\?[^#\\s]*?[?&]p=(?<page>\\d+))?)?!",
+                                ],
+                                'choose' => [
+                                    'when' => [
+                                        [
+                                            'test' => '@bvid and @page',
+                                            'iframe' => [
+                                                'width' => 720,
+                                                'height' => 405,
+                                                'src' => 'https://player.bilibili.com/player.html?bvid={@bvid}&page={@page}',
+                                            ],
+                                        ],
+                                        [
+                                            'test' => '@bvid',
+                                            'iframe' => [
+                                                'width' => 720,
+                                                'height' => 405,
+                                                'src' => 'https://player.bilibili.com/player.html?bvid={@bvid}',
+                                            ],
+                                        ],
+                                        [
+                                            'test' => '@aid and @page',
+                                            'iframe' => [
+                                                'width' => 720,
+                                                'height' => 405,
+                                                'src' => 'https://player.bilibili.com/player.html?aid={@aid}&page={@page}',
+                                            ],
+                                        ],
+                                    ],
+                                    'otherwise' => [
+                                        'iframe' => [
+                                            'width' => 720,
+                                            'height' => 405,
+                                            'src' => 'https://player.bilibili.com/player.html?aid={@aid}',
+                                        ],
+                                    ],
+                                ],
+                            ]
+                        );
+                    } elseif ($plugin === 'AutoAudio') {
+                        $configurator->Preg->match(
+                            '((?:https?://)[^\s<>"\']+\.(?:mp3|m4a|ogg|wav|flac|aac|opus)(?:\?[^\s<>"\']*)?)',
+                            'AUTOAUDIO'
+                        );
                     }
                 }
             }

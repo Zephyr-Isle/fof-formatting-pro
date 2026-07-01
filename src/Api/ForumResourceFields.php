@@ -25,15 +25,15 @@ class ForumResourceFields
     public function __invoke(): array
     {
         return [
-            Schema\Arr::make('zephyrisle-formatting-pro-fork.plugins')
+            Schema\Arr::make('zephyrisle-formatting-pro.plugins')
                 ->visible(fn (object $model, Context $context) => $context->getActor()->isAdmin())
                 ->get(function (object $model, Context $context) {
                     return self::PLUGINS;
                 }),
-            Schema\Str::make('zephyrisle-formatting-pro-fork.audio_css')
+            Schema\Str::make('zephyrisle-formatting-pro.audio_css')
                 ->visible(fn (object $model, Context $context) => $context->getActor()->isAdmin())
                 ->get(function (object $model, Context $context) {
-                    return resolve('flarum.settings')->get('zephyrisle-formatting-pro-fork.audio_css', '');
+                    return resolve('flarum.settings')->get('zephyrisle-formatting-pro.audio_css', '');
                 }),
         ];
     }

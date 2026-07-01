@@ -18,8 +18,8 @@ class ClearCache
     public function handle(Saved $event): void
     {
         foreach ($event->settings as $key => $setting) {
-            if (str_starts_with($key, 'zephyrisle-formatting-pro-fork.plugin.') || 
-                str_starts_with($key, 'zephyrisle-formatting-pro-fork.audio_css')) {
+            if (str_starts_with($key, 'zephyrisle-formatting-pro.plugin.') ||
+                str_starts_with($key, 'zephyrisle-formatting-pro.audio_css')) {
                 resolve('flarum.formatter')->flush();
 
                 return;
