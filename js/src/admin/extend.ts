@@ -20,7 +20,6 @@ admin.setting(() => ({
   setting: `${extensionId}.audio_css`,
   label: t('admin.settings.audio_css'),
   help: t('admin.settings.audio_css_help'),
-  placeholder: t('admin.settings.audio_css_placeholder'),
   type: 'textarea',
 }));
 

@@ -4,7 +4,6 @@ zephyrisle-fof-formatting-pro:
       title: Formatting Pro 设置
       plugins: 格式化插件
       audio_css: 自定义音频 CSS
-      audio_css_placeholder: "/* 在此输入音频播放器的自定义 CSS */\naudio {\n  /* 您的自定义样式 */\n}"
       audio_css_help: "输入自定义 CSS 来样式化音频播放器。此 CSS 将应用于论坛中的所有音频元素。"
     plugins:
       autoaudio: 将音频 URL 转换为 HTML5 音频播放器
