@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of zephyrisle/fof-formatting-pro.
+ * This file is part of fof/formatting.
  *
- * Copyright (c) 2026 zephyrisle.
+ * Copyright (c) FriendsOfFlarum.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -24,7 +24,7 @@ return [
         ->css(__DIR__.'/resources/less/forum.less')
         ->content(function (Document $document) {
             $settings = resolve('flarum.settings');
-            $customCss = $settings->get('zephyrisle-fof-formatting-pro.audio_css', '');
+            $customCss = $settings->get('zephyrisle-formatting-pro-fork.audio_css', '');
             
             if ($customCss) {
                 $document->head[] = '<style>' . $customCss . '</style>';
@@ -42,7 +42,7 @@ return [
             $settings = resolve('flarum.settings');
 
             foreach (Api\ForumResourceFields::PLUGINS as $plugin) {
-                $enabled = $settings->get('zephyrisle-fof-formatting-pro.plugin.'.strtolower($plugin));
+                $enabled = $settings->get('zephyrisle-formatting-pro-fork.plugin.'.strtolower($plugin));
 
                 if ($enabled) {
                     if ($plugin == 'NetEase' || $plugin == 'Bilibili') {

@@ -1,6 +1,6 @@
 {
-    "name": "zephyrisle/fof-formatting-pro",
-    "description": "Enhanced Flarum formatting extension with audio support, Chinese platforms (NetEase Cloud Music, Bilibili), and custom audio CSS",
+    "name": "zephyrisle/formatting-pro",
+    "description": "Enhanced Flarum formatting extension with audio support, Chinese platforms (NetEase Cloud Music, Bilibili), and custom audio CSS(Fork from fof-formatting)",
     "keywords": [
         "flarum",
         "formatting",
@@ -16,13 +16,13 @@
         "flarum/core": "^2.0.0"
     },
     "support": {
-        "issues": "https://github.com/Zephyr-Isle/fof-formatting-pro/issues",
-        "source": "https://github.com/Zephyr-Isle/fof-formatting-pro"
+        "issues": "https://github.com/Zephyr-Isle/formatting-pro/issues",
+        "source": "https://github.com/Zephyr-Isle/formatting-pro"
     },
     "authors": [
         {
             "name": "zephyrisle",
-            "email": "zephyrisle@example.com",
+            "email": "zephyrisle@duck.com",
             "homepage": "https://github.com/Zephyr-Isle"
         }
     ],
@@ -36,9 +36,9 @@
             "2.x": "2.x-dev"
         },
         "flarum-extension": {
-            "title": "FoF Formatting Pro",
+            "title": "Zephyr Fork: Formatting Pro",
             "category": "feature",
-            "id": "zephyrisle-fof-formatting-pro",
+            "id": "zephyrisle-formatting-pro-fork",
             "icon": {
                 "name": "fas fa-music",
                 "backgroundColor": "#ff6b6b",

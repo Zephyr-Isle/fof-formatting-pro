@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of zephyrisle/fof-formatting-pro.
+ * This file is part of fof/formatting.
  *
- * Copyright (c) 2026 zephyrisle.
+ * Copyright (c) FriendsOfFlarum.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -25,15 +25,15 @@ class ForumResourceFields
     public function __invoke(): array
     {
         return [
-            Schema\Arr::make('zephyrisle-fof-formatting-pro.plugins')
+            Schema\Arr::make('zephyrisle-formatting-pro-fork.plugins')
                 ->visible(fn (object $model, Context $context) => $context->getActor()->isAdmin())
                 ->get(function (object $model, Context $context) {
                     return self::PLUGINS;
                 }),
-            Schema\Str::make('zephyrisle-fof-formatting-pro.audio_css')
+            Schema\Str::make('zephyrisle-formatting-pro-fork.audio_css')
                 ->visible(fn (object $model, Context $context) => $context->getActor()->isAdmin())
                 ->get(function (object $model, Context $context) {
-                    return resolve('flarum.settings')->get('zephyrisle-fof-formatting-pro.audio_css', '');
+                    return resolve('flarum.settings')->get('zephyrisle-formatting-pro-fork.audio_css', '');
                 }),
         ];
     }

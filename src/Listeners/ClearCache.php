@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of zephyrisle/fof-formatting-pro.
+ * This file is part of fof/formatting.
  *
- * Copyright (c) 2026 zephyrisle.
+ * Copyright (c) FriendsOfFlarum.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,8 +18,8 @@ class ClearCache
     public function handle(Saved $event): void
     {
         foreach ($event->settings as $key => $setting) {
-            if (str_starts_with($key, 'zephyrisle-fof-formatting-pro.plugin.') || 
-                str_starts_with($key, 'zephyrisle-fof-formatting-pro.audio_css')) {
+            if (str_starts_with($key, 'zephyrisle-formatting-pro-fork.plugin.') || 
+                str_starts_with($key, 'zephyrisle-formatting-pro-fork.audio_css')) {
                 resolve('flarum.formatter')->flush();
 
                 return;

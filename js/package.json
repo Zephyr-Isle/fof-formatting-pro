@@ -1,5 +1,5 @@
 {
-  "name": "@zephyrisle/fof-formatting-pro",
+  "name": "@zephyrisle/formatting-pro",
   "private": true,
   "prettier": "@flarum/prettier-config",
   "dependencies": {

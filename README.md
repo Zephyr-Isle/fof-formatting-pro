@@ -1,8 +1,17 @@
-# FoF Formatting Pro
+# Formatting Pro (Fork)
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/zephyrisle/fof-formatting-pro.svg)](https://packagist.org/packages/zephyrisle/fof-formatting-pro)
 
-A [Flarum](http://flarum.org) extension. Enhanced formatting with audio support, Chinese platforms (NetEase Cloud Music, Bilibili), and custom audio CSS.
+This is a fork of the original [FriendsOfFlarum/formatting](https://github.com/FriendsOfFlarum/formatting) extension for [Flarum](http://flarum.org), maintained as a separate project with additional audio support, Chinese platform embeds (NetEase Cloud Music, Bilibili), and custom audio CSS.
+
+## Fork Notice
+
+This repository is a forked and independently maintained derivative of:
+
+- Original source: [FriendsOfFlarum/formatting](https://github.com/FriendsOfFlarum/formatting)
+- This fork: [Zephyr-Isle/formatting-pro](https://github.com/Zephyr-Isle/formatting-pro)
+
+Please refer to the original repository for upstream source history and the original implementation.
 
 ## Features
 
@@ -16,13 +25,13 @@ A [Flarum](http://flarum.org) extension. Enhanced formatting with audio support,
 Install with composer:
 
 ```sh
-composer require zephyrisle/fof-formatting-pro:"*"
+composer require zephyrisle/formatting-pro
 ```
 
 ## Updating
 
 ```sh
-composer update zephyrisle/fof-formatting-pro
+composer update zephyrisle/formatting-pro
 ```
 
 ## Configuration
@@ -66,8 +75,8 @@ audio {
 
 ## Links
 
-- [Packagist](https://packagist.org/packages/zephyrisle/fof-formatting-pro)
-- [GitHub](https://github.com/Zephyr-Isle/fof-formatting-pro)
+- [Packagist](https://packagist.org/packages/zephyrisle/formatting-pro)
+- [GitHub](https://github.com/Zephyr-Isle/formatting-pro)
 - [Flarum Discuss](https://discuss.flarum.org/)
 
 ## Requirements
@@ -80,6 +89,6 @@ MIT
 
 ## Credits
 
-Based on [FoF Formatting](https://github.com/FriendsOfFlarum/formatting) by FriendsOfFlarum.
+Forked from [FriendsOfFlarum/formatting](https://github.com/FriendsOfFlarum/formatting) by FriendsOfFlarum.
 
-An extension by [zephyrisle](https://github.com/Zephyr-Isle).
+Maintained as a separate fork by [zephyrisle](https://github.com/Zephyr-Isle).
